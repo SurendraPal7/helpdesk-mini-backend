@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
-import jwtUtil from '../utils/jwt.util.js';
+import * as jwtUtil from '../utils/jwt.util.js'; 
 
 const makeError = (code, field, message) => ({ error: { code, field, message } });
 

@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt'; // at the top of the file
+
 const { Schema, model } = mongoose;
 
 const UserSchema = new Schema({
@@ -9,7 +11,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.methods.verifyPassword = function(password) {
-  return require('bcrypt').compare(password, this.passwordHash);
+  return bcrypt.compare(password, this.passwordHash);
 };
 
 export default model('User', UserSchema);
