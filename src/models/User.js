@@ -10,19 +10,9 @@ const UserSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// Method to verify password
+// Correct verifyPassword method
 UserSchema.methods.verifyPassword = function(password) {
   return bcrypt.compare(password, this.passwordHash);
 };
 
-// Optional: hash password before saving (if you want to save raw passwords safely)
-// UserSchema.pre('save', async function(next) {
-//   if (this.isModified('passwordHash')) {
-//     this.passwordHash = await bcrypt.hash(this.passwordHash, 10);
-//   }
-//   next();
-// });
-
-const User = model('User', UserSchema);
-
-export default User;
+export default model('User', UserSchema);
