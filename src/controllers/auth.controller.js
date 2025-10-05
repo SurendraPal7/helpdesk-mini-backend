@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
-import * as jwtUtil from '../utils/jwt.util.js'; 
+import * as jwtUtil from '../utils/jwt.util.js';
 
 const makeError = (code, field, message) => ({ error: { code, field, message } });
 
@@ -15,7 +15,7 @@ export const register = async (req, res) => {
   const hash = await bcrypt.hash(password, 10);
   const user = await User.create({ email, passwordHash: hash, role: role || 'user' });
 
-  const token = jwtUtil.sign({ userId: user._id.toString(), role: user.role });
+    const token = sign({ userId: user._id.toString(), role: user.role }); // ✅ use sign()
   res.status(201).json({ user: { id: user._id, email: user.email, role: user.role }, token });
 };
 
@@ -30,6 +30,6 @@ export const login = async (req, res) => {
   const ok = await user.verifyPassword(password);
   if (!ok) return res.status(400).json(makeError('NOT_FOUND','email','Invalid credentials'));
 
-  const token = jwtUtil.sign({ userId: user._id.toString(), role: user.role });
+const token = sign({ userId: user._id.toString(), role: user.role });
   res.json({ user: { id: user._id, email: user.email, role: user.role }, token });
 };
